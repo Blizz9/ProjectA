@@ -56,8 +56,19 @@ public class CameraController : MonoBehaviour
                     break;
             }
 
-            float x = Mathf.Clamp(Camera.main.transform.localPosition.x + X_ZOOM_RATE * Time.deltaTime, Camera.main.transform.localPosition.x, zoomValues.x);
-            float y = Mathf.Clamp(Camera.main.transform.localPosition.y + Y_ZOOM_RATE * Time.deltaTime, Camera.main.transform.localPosition.y, zoomValues.y);
+			float x = Camera.main.transform.localPosition.x;
+			float y = Camera.main.transform.localPosition.y;
+
+			if (x < zoomValues.x)
+				x = Mathf.Clamp(Camera.main.transform.localPosition.x + X_ZOOM_RATE * Time.deltaTime, x, zoomValues.x);
+			else
+				x = Mathf.Clamp(Camera.main.transform.localPosition.x - X_ZOOM_RATE * Time.deltaTime, zoomValues.x, x);
+
+			if (y < zoomValues.y)
+            	y = Mathf.Clamp(Camera.main.transform.localPosition.y + Y_ZOOM_RATE * Time.deltaTime, y, zoomValues.y);
+			else
+				y = Mathf.Clamp(Camera.main.transform.localPosition.y - Y_ZOOM_RATE * Time.deltaTime, zoomValues.y, y);
+			
             Camera.main.transform.localPosition = new Vector3(x, y, Camera.main.transform.localPosition.z);
 
             Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize + SIZE_ZOOM_RATE * Time.deltaTime, Camera.main.orthographicSize, zoomValues.z);
