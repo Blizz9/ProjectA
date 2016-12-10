@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     private const float MOVE_RATE = 3f;
 
+    public Sprite FloorTileSprite;
+
     private bool _ignoreNextTriggerEnter;
 
     #region MonoBehaviour
@@ -66,16 +68,35 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            GameObject key = collision.gameObject;
+            if (collision.gameObject.name == "Key")
+            {
+                Debug.Log("Picked up key");
 
-            key.transform.parent = gameObject.transform;
-            key.transform.localPosition = Vector3.zero;
-            key.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
-            key.GetComponent<Collider2D>().enabled = false;
+                GameObject key = collision.gameObject;
 
-            GameObject room1 = gameObject.SearchHierarchy(HierarchySearchType.Siblings, true, "Room1").First();
-            GameObject room1DoorTile = room1.SearchHierarchy(HierarchySearchType.Descendants, true, "DoorTile").First();
-            room1DoorTile.GetComponent<Collider2D>().isTrigger = true;
+                key.transform.parent = gameObject.transform;
+                key.transform.localPosition = Vector3.zero;
+                key.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                key.GetComponent<Collider2D>().enabled = false;
+
+                GameObject room1 = gameObject.SearchHierarchy(HierarchySearchType.Siblings, true, "Room1").First();
+                GameObject room1DoorTile = room1.SearchHierarchy(HierarchySearchType.Descendants, true, "DoorTile").First();
+                room1DoorTile.GetComponent<Collider2D>().isTrigger = true;
+            }
+            else if (collision.gameObject.name == "DoorTile")
+            {
+                Debug.Log("Unlocked door");
+
+                GameObject doorTile = collision.gameObject;
+
+                doorTile.GetComponent<SpriteRenderer>().sprite = FloorTileSprite;
+                Destroy(doorTile.GetComponent<Collider2D>());
+
+                GameObject key = gameObject.SearchHierarchy(HierarchySearchType.Children, true, "Key").First();
+                Destroy(key);
+
+                Camera.main.GetComponent<CameraController>().ZoomLevelTarget = 2;
+            }
         }
     }
 

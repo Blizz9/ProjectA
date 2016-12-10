@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour
     public Vector3 ZoomLevel4;
     public Vector3 ZoomLevel7;
 
-    private int zoomLevelTarget;
+    [HideInInspector] public int ZoomLevelTarget;
 
     #region MonoBehaviour
 
@@ -26,22 +26,22 @@ public class CameraController : MonoBehaviour
 
     public void Update()
     {
-        if (zoomLevelTarget == 0)
+        if (ZoomLevelTarget == 0)
         {
             if (Input.GetButtonDown("Jump"))
             {
                 if (Camera.main.orthographicSize == ZoomLevel1.z)
-                    zoomLevelTarget = 2;
+                    ZoomLevelTarget = 2;
                 else if (Camera.main.orthographicSize == ZoomLevel2.z)
-                    zoomLevelTarget = 3;
+                    ZoomLevelTarget = 3;
                 else if (Camera.main.orthographicSize == ZoomLevel3.z)
-                    zoomLevelTarget = 4;
+                    ZoomLevelTarget = 4;
             }
         }
         else
         {
             Vector3 zoomValues = Vector3.zero;
-            switch (zoomLevelTarget)
+            switch (ZoomLevelTarget)
             {
                 case 2:
                     zoomValues = ZoomLevel2;
@@ -63,7 +63,7 @@ public class CameraController : MonoBehaviour
             Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize + SIZE_ZOOM_RATE * Time.deltaTime, Camera.main.orthographicSize, zoomValues.z);
 
             if ((x == zoomValues.x) && (y == zoomValues.y) && (Camera.main.orthographicSize == zoomValues.z))
-                zoomLevelTarget = 0;
+                ZoomLevelTarget = 0;
         }
     }
 
