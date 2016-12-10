@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public void Awake()
     {
         _currentRoom = gameObject.SearchHierarchy(HierarchySearchType.Siblings, true, "Room1").First();
+        gameObject.SearchHierarchy(HierarchySearchType.All, true, "UI").First().SetActive(true);
         gameObject.SearchHierarchy(HierarchySearchType.All, true, "MoveInstructions").First().SetActive(true);
     }
 
@@ -66,12 +67,12 @@ public class PlayerController : MonoBehaviour
                 {
                     heldItem.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Ping");
 
-                    RaycastHit2D[] nearColliders = Physics2D.CircleCastAll(transform.position, 1f, Vector2.zero);
+                    RaycastHit2D[] nearColliders = Physics2D.CircleCastAll(transform.position, 1.3f, Vector2.zero);
                     foreach (RaycastHit2D nearCollider in nearColliders)
                     {
                         if (nearCollider.collider.name == "WallTile")
                         {
-                            nearCollider.collider.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
+                            nearCollider.collider.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.25f);
                         }
                         else if (nearCollider.collider.name == "HiddenDoorTile")
                         {
