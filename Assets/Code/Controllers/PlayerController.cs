@@ -60,10 +60,12 @@ public class PlayerController : MonoBehaviour
             {
                 GameObject heldItem = transform.GetChild(0).gameObject;
 
-                Debug.Log("Holding " + heldItem.name);
+                Debug.Log("Using " + heldItem.name);
 
                 if (heldItem.name == "Sonar")
                 {
+                    heldItem.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Ping");
+
                     RaycastHit2D[] nearColliders = Physics2D.CircleCastAll(transform.position, 1f, Vector2.zero);
                     foreach (RaycastHit2D nearCollider in nearColliders)
                     {

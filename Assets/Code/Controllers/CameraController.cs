@@ -28,7 +28,7 @@ public class CameraController : MonoBehaviour
     {
         if (ZoomLevelTarget == 0)
         {
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown("Fire2"))
             {
                 if (Camera.main.orthographicSize == ZoomLevel1.z)
                     ZoomLevelTarget = 2;
