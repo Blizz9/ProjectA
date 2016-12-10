@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[AddComponentMenu("ProjectA/Controllers/Player Controller")]
+[AddComponentMenu("Ludum Dare 37/Controllers/Player Controller")]
 public class PlayerController : MonoBehaviour
 {
     #region MonoBehaviour
