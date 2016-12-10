@@ -6,6 +6,11 @@ public class PlayerController : MonoBehaviour
 {
     private const float MOVE_RATE = 3f;
 
+    public Sprite PlayerUpSprite;
+    public Sprite PlayerDownSprite;
+    public Sprite PlayerLeftSprite;
+    public Sprite PlayerRightSprite;
+
     public Sprite FloorTileSprite;
     public Sprite DoorTileSprite;
 
@@ -18,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public void Awake()
     {
         _currentRoom = gameObject.SearchHierarchy(HierarchySearchType.Siblings, true, "Room1").First();
+        gameObject.SearchHierarchy(HierarchySearchType.All, true, "MoveInstructions").First().SetActive(true);
     }
 
     public void Update()
@@ -26,22 +32,26 @@ public class PlayerController : MonoBehaviour
         {
             float x = transform.localPosition.x - MOVE_RATE * Time.deltaTime;
             transform.localPosition = new Vector3(x, transform.localPosition.y, transform.localPosition.z);
+            GetComponent<SpriteRenderer>().sprite = PlayerLeftSprite;
         }
         else if (Input.GetAxis("Horizontal") > 0f)
         {
             float x = transform.localPosition.x + MOVE_RATE * Time.deltaTime;
             transform.localPosition = new Vector3(x, transform.localPosition.y, transform.localPosition.z);
+            GetComponent<SpriteRenderer>().sprite = PlayerRightSprite;
         }
 
         if (Input.GetAxis("Vertical") < 0f)
         {
             float y = transform.localPosition.y - MOVE_RATE * Time.deltaTime;
             transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
+            GetComponent<SpriteRenderer>().sprite = PlayerDownSprite;
         }
         else if (Input.GetAxis("Vertical") > 0f)
         {
             float y = transform.localPosition.y + MOVE_RATE * Time.deltaTime;
             transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
+            GetComponent<SpriteRenderer>().sprite = PlayerUpSprite;
         }
 
         if (Input.GetButtonDown("Jump"))
@@ -67,6 +77,9 @@ public class PlayerController : MonoBehaviour
 
                             doorTile.name = "DoorTile";
                             doorTile.GetComponent<SpriteRenderer>().sprite = DoorTileSprite;
+
+                            if (_currentRoom.name == "Room2")
+                                gameObject.SearchHierarchy(HierarchySearchType.All, true, "ItemInstructions").First().SetActive(false);
 
                             Destroy(heldItem);
 
@@ -117,14 +130,28 @@ public class PlayerController : MonoBehaviour
                 GameObject key = gameObject.SearchHierarchy(HierarchySearchType.Children, true, "Key").First();
                 Destroy(key);
 
-                _currentRoom = gameObject.SearchHierarchy(HierarchySearchType.Siblings, true, "Room2").First();
-                Camera.main.GetComponent<CameraController>().ZoomLevelTarget = 2;
+                switch (_currentRoom.name)
+                {
+                    case "Room1":
+                        gameObject.SearchHierarchy(HierarchySearchType.All, true, "MoveInstructions").First().SetActive(false);
+                        _currentRoom = gameObject.SearchHierarchy(HierarchySearchType.Siblings, true, "Room2").First();
+                        Camera.main.GetComponent<CameraController>().ZoomLevelTarget = 2;
+                        break;
+
+                    case "Room2":
+                        _currentRoom = gameObject.SearchHierarchy(HierarchySearchType.Siblings, true, "Room3").First();
+                        Camera.main.GetComponent<CameraController>().ZoomLevelTarget = 3;
+                        break;
+                }
 
                 Debug.Log("Unlocked door");
             }
             else if (collision.gameObject.name == "Sonar")
             {
                 dropHeldItem();
+
+                if (_currentRoom.name == "Room2")
+                    gameObject.SearchHierarchy(HierarchySearchType.All, true, "ItemInstructions").First().SetActive(true);
 
                 GameObject sonar = collision.gameObject;
 
@@ -153,6 +180,11 @@ public class PlayerController : MonoBehaviour
                 GameObject roomDoorTile = _currentRoom.SearchHierarchy(HierarchySearchType.Descendants, true, "DoorTile").FirstOrDefault();
                 if (roomDoorTile != null)
                     roomDoorTile.GetComponent<Collider2D>().isTrigger = false;
+            }
+            else if (heldItem.name == "Sonar")
+            {
+                if (_currentRoom.name == "Room2")
+                    gameObject.SearchHierarchy(HierarchySearchType.All, true, "ItemInstructions").First().SetActive(false);
             }
 
             heldItem.transform.parent = _currentRoom.transform;
