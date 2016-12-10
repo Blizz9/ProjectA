@@ -9,6 +9,8 @@ public class CameraController : MonoBehaviour
 
     public Vector3 ZoomLevel1;
     public Vector3 ZoomLevel2;
+    public Vector3 ZoomLevel3;
+    public Vector3 ZoomLevel4;
 
     private int zoomLevelTarget;
 
@@ -16,18 +18,43 @@ public class CameraController : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetButtonDown("Jump"))
-            zoomLevelTarget = 2;
-
-        if (zoomLevelTarget != 0)
+        if (zoomLevelTarget == 0)
         {
-            float x = Mathf.Clamp(Camera.main.transform.localPosition.x + X_ZOOM_RATE * Time.deltaTime, Camera.main.transform.localPosition.x, ZoomLevel2.x);
-            float y = Mathf.Clamp(Camera.main.transform.localPosition.y + Y_ZOOM_RATE * Time.deltaTime, Camera.main.transform.localPosition.y, ZoomLevel2.y);
+            if (Input.GetButtonDown("Jump"))
+            {
+                if (Camera.main.orthographicSize == ZoomLevel1.z)
+                    zoomLevelTarget = 2;
+                else if (Camera.main.orthographicSize == ZoomLevel2.z)
+                    zoomLevelTarget = 3;
+                else if (Camera.main.orthographicSize == ZoomLevel3.z)
+                    zoomLevelTarget = 4;
+            }
+        }
+        else
+        {
+            Vector3 zoomValues = Vector3.zero;
+            switch (zoomLevelTarget)
+            {
+                case 2:
+                    zoomValues = ZoomLevel2;
+                    break;
+
+                case 3:
+                    zoomValues = ZoomLevel3;
+                    break;
+
+                case 4:
+                    zoomValues = ZoomLevel4;
+                    break;
+            }
+
+            float x = Mathf.Clamp(Camera.main.transform.localPosition.x + X_ZOOM_RATE * Time.deltaTime, Camera.main.transform.localPosition.x, zoomValues.x);
+            float y = Mathf.Clamp(Camera.main.transform.localPosition.y + Y_ZOOM_RATE * Time.deltaTime, Camera.main.transform.localPosition.y, zoomValues.y);
             Camera.main.transform.localPosition = new Vector3(x, y, Camera.main.transform.localPosition.z);
 
-            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize + SIZE_ZOOM_RATE * Time.deltaTime, Camera.main.orthographicSize, ZoomLevel2.z);
+            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize + SIZE_ZOOM_RATE * Time.deltaTime, Camera.main.orthographicSize, zoomValues.z);
 
-            if ((x == ZoomLevel2.x) && (y == ZoomLevel2.y) && (Camera.main.orthographicSize == ZoomLevel2.z))
+            if ((x == zoomValues.x) && (y == zoomValues.y) && (Camera.main.orthographicSize == zoomValues.z))
                 zoomLevelTarget = 0;
         }
     }
