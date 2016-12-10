@@ -7,10 +7,18 @@ public class PlayerController : MonoBehaviour
     private const float MOVE_RATE = 3f;
 
     public Sprite FloorTileSprite;
+    public Sprite DoorTileSprite;
+
+    private GameObject _currentRoom;
 
     private bool _ignoreNextTriggerEnter;
 
     #region MonoBehaviour
+
+    public void Awake()
+    {
+        _currentRoom = gameObject.SearchHierarchy(HierarchySearchType.Siblings, true, "Room1").First();
+    }
 
     public void Update()
     {
@@ -36,22 +44,36 @@ public class PlayerController : MonoBehaviour
             transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
         }
 
-        // stub out what it is like to drop an item, we will use this later
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Jump"))
         {
-            GameObject key = gameObject.SearchHierarchy(HierarchySearchType.Children, true, "Key").FirstOrDefault();
-
-            if (key != null)
+            if (transform.childCount > 0)
             {
-                GameObject room1 = gameObject.SearchHierarchy(HierarchySearchType.Siblings, true, "Room1").First();
-                GameObject room1DoorTile = room1.SearchHierarchy(HierarchySearchType.Descendants, true, "DoorTile").First();
-                room1DoorTile.GetComponent<Collider2D>().isTrigger = false;
+                GameObject heldItem = transform.GetChild(0).gameObject;
 
-                key.transform.parent = room1.transform;
-                key.transform.localScale = Vector3.one;
+                Debug.Log("Holding " + heldItem.name);
 
-                _ignoreNextTriggerEnter = true;
-                key.GetComponent<Collider2D>().enabled = true;
+                if (heldItem.name == "Sonar")
+                {
+                    RaycastHit2D[] nearColliders = Physics2D.CircleCastAll(transform.position, 1f, Vector2.zero);
+                    foreach (RaycastHit2D nearCollider in nearColliders)
+                    {
+                        if (nearCollider.collider.name == "WallTile")
+                        {
+                            nearCollider.collider.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
+                        }
+                        else if (nearCollider.collider.name == "HiddenDoorTile")
+                        {
+                            GameObject doorTile = nearCollider.collider.gameObject;
+
+                            doorTile.name = "DoorTile";
+                            doorTile.GetComponent<SpriteRenderer>().sprite = DoorTileSprite;
+
+                            Destroy(heldItem);
+
+                            Debug.Log("Found hidden door");
+                        }
+                    }
+                }
             }
         }
     }
@@ -70,7 +92,7 @@ public class PlayerController : MonoBehaviour
         {
             if (collision.gameObject.name == "Key")
             {
-                Debug.Log("Picked up key");
+                dropHeldItem();
 
                 GameObject key = collision.gameObject;
 
@@ -79,14 +101,14 @@ public class PlayerController : MonoBehaviour
                 key.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
                 key.GetComponent<Collider2D>().enabled = false;
 
-                GameObject room1 = gameObject.SearchHierarchy(HierarchySearchType.Siblings, true, "Room1").First();
-                GameObject room1DoorTile = room1.SearchHierarchy(HierarchySearchType.Descendants, true, "DoorTile").First();
-                room1DoorTile.GetComponent<Collider2D>().isTrigger = true;
+                GameObject roomDoorTile = _currentRoom.SearchHierarchy(HierarchySearchType.Descendants, true, "DoorTile").FirstOrDefault();
+                if (roomDoorTile != null)
+                    roomDoorTile.GetComponent<Collider2D>().isTrigger = true;
+
+                Debug.Log("Picked up key");
             }
             else if (collision.gameObject.name == "DoorTile")
             {
-                Debug.Log("Unlocked door");
-
                 GameObject doorTile = collision.gameObject;
 
                 doorTile.GetComponent<SpriteRenderer>().sprite = FloorTileSprite;
@@ -95,8 +117,51 @@ public class PlayerController : MonoBehaviour
                 GameObject key = gameObject.SearchHierarchy(HierarchySearchType.Children, true, "Key").First();
                 Destroy(key);
 
+                _currentRoom = gameObject.SearchHierarchy(HierarchySearchType.Siblings, true, "Room2").First();
                 Camera.main.GetComponent<CameraController>().ZoomLevelTarget = 2;
+
+                Debug.Log("Unlocked door");
             }
+            else if (collision.gameObject.name == "Sonar")
+            {
+                dropHeldItem();
+
+                GameObject sonar = collision.gameObject;
+
+                sonar.transform.parent = gameObject.transform;
+                sonar.transform.localPosition = Vector3.zero;
+                sonar.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                sonar.GetComponent<Collider2D>().enabled = false;
+
+                Debug.Log("Picked up sonar");
+            }
+        }
+    }
+
+    #endregion
+
+    #region Items
+
+    private void dropHeldItem()
+    {
+        if (transform.childCount > 0)
+        {
+            GameObject heldItem = transform.GetChild(0).gameObject;
+
+            if (heldItem.name == "Key")
+            {
+                GameObject roomDoorTile = _currentRoom.SearchHierarchy(HierarchySearchType.Descendants, true, "DoorTile").FirstOrDefault();
+                if (roomDoorTile != null)
+                    roomDoorTile.GetComponent<Collider2D>().isTrigger = false;
+            }
+
+            heldItem.transform.parent = _currentRoom.transform;
+            heldItem.transform.localScale = Vector3.one;
+
+            _ignoreNextTriggerEnter = true;
+            heldItem.GetComponent<Collider2D>().enabled = true;
+
+            Debug.Log("Dropped " + heldItem.name);
         }
     }
 
