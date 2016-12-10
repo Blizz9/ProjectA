@@ -11,10 +11,18 @@ public class CameraController : MonoBehaviour
     public Vector3 ZoomLevel2;
     public Vector3 ZoomLevel3;
     public Vector3 ZoomLevel4;
+    public Vector3 ZoomLevel7;
 
     private int zoomLevelTarget;
 
     #region MonoBehaviour
+
+    public void Awake()
+    {
+        Camera.main.transform.localPosition = new Vector3(ZoomLevel1.x, ZoomLevel1.y, Camera.main.transform.localPosition.z);
+
+        Camera.main.orthographicSize = ZoomLevel1.z;
+    }
 
     public void Update()
     {
