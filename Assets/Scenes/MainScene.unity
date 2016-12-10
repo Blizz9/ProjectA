@@ -228,6 +228,7 @@ GameObject:
   m_Component:
   - component: {fileID: 18481007}
   - component: {fileID: 18481008}
+  - component: {fileID: 18481009}
   m_Layer: 0
   m_Name: DoorTile
   m_TagString: Untagged
@@ -283,6 +284,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &18481009
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 18481006}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &34063854
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,6 +947,7 @@ GameObject:
   m_Component:
   - component: {fileID: 182344573}
   - component: {fileID: 182344574}
+  - component: {fileID: 182344575}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -987,6 +1003,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &182344575
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 182344572}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &196020702
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,6 +1200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 218991059}
   - component: {fileID: 218991060}
+  - component: {fileID: 218991061}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -1225,6 +1256,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &218991061
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 218991058}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &263597973
 GameObject:
   m_ObjectHideFlags: 0
@@ -1521,6 +1566,7 @@ GameObject:
   m_Component:
   - component: {fileID: 315745866}
   - component: {fileID: 315745867}
+  - component: {fileID: 315745868}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -1576,6 +1622,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &315745868
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 315745865}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &328468534
 GameObject:
   m_ObjectHideFlags: 0
@@ -2363,6 +2423,7 @@ GameObject:
   m_Component:
   - component: {fileID: 512559768}
   - component: {fileID: 512559769}
+  - component: {fileID: 512559770}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -2418,6 +2479,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &512559770
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 512559767}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &512971320
 GameObject:
   m_ObjectHideFlags: 0
@@ -2427,6 +2502,7 @@ GameObject:
   m_Component:
   - component: {fileID: 512971321}
   - component: {fileID: 512971322}
+  - component: {fileID: 512971323}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -2482,6 +2558,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &512971323
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 512971320}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &522174478
 GameObject:
   m_ObjectHideFlags: 0
@@ -2491,6 +2581,7 @@ GameObject:
   m_Component:
   - component: {fileID: 522174479}
   - component: {fileID: 522174480}
+  - component: {fileID: 522174481}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -2546,6 +2637,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &522174481
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 522174478}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &549152609
 GameObject:
   m_ObjectHideFlags: 0
@@ -3003,6 +3108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 622284878}
   - component: {fileID: 622284879}
+  - component: {fileID: 622284880}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -3058,6 +3164,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &622284880
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 622284877}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &665640028
 GameObject:
   m_ObjectHideFlags: 0
@@ -4043,6 +4163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 834615924}
   - component: {fileID: 834615925}
+  - component: {fileID: 834615926}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -4098,6 +4219,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &834615926
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 834615923}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &847660650
 GameObject:
   m_ObjectHideFlags: 0
@@ -4427,6 +4562,7 @@ GameObject:
   m_Component:
   - component: {fileID: 903604671}
   - component: {fileID: 903604672}
+  - component: {fileID: 903604673}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -4482,6 +4618,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &903604673
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 903604670}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &915968240
 GameObject:
   m_ObjectHideFlags: 0
@@ -4747,6 +4897,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1003675026}
   - component: {fileID: 1003675027}
+  - component: {fileID: 1003675028}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -4802,6 +4953,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &1003675028
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1003675025}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &1021846720
 GameObject:
   m_ObjectHideFlags: 0
@@ -5131,6 +5296,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1066055400}
   - component: {fileID: 1066055401}
+  - component: {fileID: 1066055402}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -5186,6 +5352,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &1066055402
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1066055399}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &1066424872
 GameObject:
   m_ObjectHideFlags: 0
@@ -6116,6 +6296,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1274947970}
   - component: {fileID: 1274947971}
+  - component: {fileID: 1274947972}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -6171,6 +6352,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &1274947972
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1274947969}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &1275858476
 GameObject:
   m_ObjectHideFlags: 0
@@ -6537,6 +6732,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1347138135}
   - component: {fileID: 1347138136}
+  - component: {fileID: 1347138137}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -6592,6 +6788,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &1347138137
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1347138134}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &1349748075
 GameObject:
   m_ObjectHideFlags: 0
@@ -6729,6 +6939,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1418786464}
   - component: {fileID: 1418786465}
+  - component: {fileID: 1418786466}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -6784,6 +6995,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &1418786466
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1418786463}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &1420437702
 GameObject:
   m_ObjectHideFlags: 0
@@ -6985,6 +7210,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1427857490}
   - component: {fileID: 1427857489}
+  - component: {fileID: 1427857493}
+  - component: {fileID: 1427857492}
+  - component: {fileID: 1427857491}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -7040,6 +7268,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1427857491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1427857488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09857bed460acf04aba4d68ec17aeeb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &1427857492
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1427857488}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: -0.03, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.94, y: 1}
+--- !u!50 &1427857493
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1427857488}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 2
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!1 &1433861422
 GameObject:
   m_ObjectHideFlags: 0
@@ -7193,6 +7466,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1525718021}
   - component: {fileID: 1525718022}
+  - component: {fileID: 1525718023}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -7248,6 +7522,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &1525718023
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1525718020}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &1530556515
 GameObject:
   m_ObjectHideFlags: 0
@@ -7638,6 +7926,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1625771213}
   - component: {fileID: 1625771214}
+  - component: {fileID: 1625771215}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -7693,6 +7982,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &1625771215
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1625771212}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &1635926816
 GameObject:
   m_ObjectHideFlags: 0
@@ -8086,6 +8389,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1705511495}
   - component: {fileID: 1705511496}
+  - component: {fileID: 1705511497}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -8141,6 +8445,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &1705511497
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1705511494}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &1710752488
 GameObject:
   m_ObjectHideFlags: 0
@@ -8342,6 +8660,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1731095856}
   - component: {fileID: 1731095857}
+  - component: {fileID: 1731095858}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -8397,6 +8716,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &1731095858
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1731095855}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &1731446898
 GameObject:
   m_ObjectHideFlags: 0
@@ -8790,6 +9123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1832094271}
   - component: {fileID: 1832094272}
+  - component: {fileID: 1832094273}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -8845,6 +9179,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &1832094273
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1832094270}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &1860375375
 GameObject:
   m_ObjectHideFlags: 0
@@ -8918,6 +9266,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1870678447}
   - component: {fileID: 1870678448}
+  - component: {fileID: 1870678449}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -8973,6 +9322,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &1870678449
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1870678446}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &1884316951
 GameObject:
   m_ObjectHideFlags: 0
@@ -9471,6 +9834,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2016246709}
   - component: {fileID: 2016246710}
+  - component: {fileID: 2016246711}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -9526,6 +9890,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &2016246711
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2016246708}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &2028998856
 GameObject:
   m_ObjectHideFlags: 0
@@ -9791,6 +10169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2079822565}
   - component: {fileID: 2079822566}
+  - component: {fileID: 2079822567}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -9846,6 +10225,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &2079822567
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2079822564}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &2093629962
 GameObject:
   m_ObjectHideFlags: 0
@@ -10084,6 +10477,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2138115377}
   - component: {fileID: 2138115378}
+  - component: {fileID: 2138115379}
   m_Layer: 0
   m_Name: WallTile
   m_TagString: Untagged
@@ -10139,6 +10533,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!61 &2138115379
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2138115376}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!1 &2141950026
 GameObject:
   m_ObjectHideFlags: 0

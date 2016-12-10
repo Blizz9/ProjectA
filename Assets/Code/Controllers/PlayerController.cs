@@ -3,32 +3,33 @@
 [AddComponentMenu("Ludum Dare 37/Controllers/Player Controller")]
 public class PlayerController : MonoBehaviour
 {
+    private const float MOVE_RATE = 3f;
+
     #region MonoBehaviour
-
-    // commonly used code-by-convention MonoBehaviour method stub https://docs.unity3d.com/Manual/ExecutionOrder.html
-    public void Awake()
-    {
-    }
-
-    // commonly used code-by-convention MonoBehaviour method stub https://docs.unity3d.com/Manual/ExecutionOrder.html
-    public void Start()
-    {
-    }
 
     public void Update()
     {
-        if (Input.GetButtonDown("Jump")) // button name comes from Input settings (Edit -> Project Settings -> Input)
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, 6f), ForceMode2D.Impulse); // force is just a magic number that felt ok
-
-        if (Input.GetAxis("Horizontal") < 0f) // axis name comes from Input settings (Edit -> Project Settings -> Input)
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(-5f, 0f), ForceMode2D.Force); // force is just a magic number that felt ok
+        if (Input.GetAxis("Horizontal") < 0f)
+        {
+            float x = transform.localPosition.x - MOVE_RATE * Time.deltaTime;
+            transform.localPosition = new Vector3(x, transform.localPosition.y, transform.localPosition.z);
+        }
         else if (Input.GetAxis("Horizontal") > 0f)
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(5f, 0f), ForceMode2D.Force);
-    }
+        {
+            float x = transform.localPosition.x + MOVE_RATE * Time.deltaTime;
+            transform.localPosition = new Vector3(x, transform.localPosition.y, transform.localPosition.z);
+        }
 
-    // commonly used code-by-convention MonoBehaviour method stub https://docs.unity3d.com/Manual/ExecutionOrder.html
-    public void LateUpdate()
-    {
+        if (Input.GetAxis("Vertical") < 0f)
+        {
+            float y = transform.localPosition.y - MOVE_RATE * Time.deltaTime;
+            transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
+        }
+        else if (Input.GetAxis("Vertical") > 0f)
+        {
+            float y = transform.localPosition.y + MOVE_RATE * Time.deltaTime;
+            transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
+        }
     }
 
     #endregion
