@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour
                 if (heldItem.name == "Sonar")
                 {
                     heldItem.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Ping");
+                    heldItem.GetComponent<AudioSource>().Play();
 
                     RaycastHit2D[] nearColliders = Physics2D.CircleCastAll(transform.position, 1.3f, Vector2.zero);
                     foreach (RaycastHit2D nearCollider in nearColliders)
@@ -121,6 +122,8 @@ public class PlayerController : MonoBehaviour
                 if (roomDoorTile != null)
                     roomDoorTile.GetComponent<Collider2D>().isTrigger = true;
 
+                key.GetComponent<AudioSource>().Play();
+
                 Debug.Log("Picked up key");
             }
             else if (collision.gameObject.name == "DoorTile")
@@ -146,6 +149,8 @@ public class PlayerController : MonoBehaviour
                         Camera.main.GetComponent<CameraController>().ZoomLevelTarget = 3;
                         break;
                 }
+
+                doorTile.GetComponents<AudioSource>().ToList().ForEach(aus => aus.Play());
 
                 Debug.Log("Unlocked door");
             }
