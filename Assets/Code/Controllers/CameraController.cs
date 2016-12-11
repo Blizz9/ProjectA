@@ -3,10 +3,6 @@
 [AddComponentMenu("Ludum Dare 37/Controllers/Camera Controller")]
 public class CameraController : MonoBehaviour
 {
-    //private const float X_ZOOM_RATE = 1.777778f;
-    //private const float Y_ZOOM_RATE = 1f;
-    //private const float SIZE_ZOOM_RATE = 1f;
-
     public float ZoomRate = 1f;
 
     public Vector3 ZoomLevel1;
