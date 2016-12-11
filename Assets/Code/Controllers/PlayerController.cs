@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     public Sprite DoorTileSprite;
     public Sprite WallTileKeyHoleSprite;
 
+    public AudioClip SonarAudioClip;
+    public AudioClip GlassBreakAudioClip;
+
     private GameObject _currentRoom;
 
     private bool _ignoreNextTriggerEnter;
@@ -45,7 +48,7 @@ public class PlayerController : MonoBehaviour
                     if (heldItem.name == "Sonar")
                     {
                         heldItem.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Ping");
-                        heldItem.GetComponent<AudioSource>().Play();
+                        GetComponent<AudioSource>().PlayOneShot(SonarAudioClip);
 
                         RaycastHit2D[] nearColliders = Physics2D.CircleCastAll(transform.position, 1.3f, Vector2.zero);
                         foreach (RaycastHit2D nearCollider in nearColliders)
@@ -96,13 +99,23 @@ public class PlayerController : MonoBehaviour
                     else if (heldItem.name == "Hammer")
                     {
                         if (GetComponent<SpriteRenderer>().sprite.name == PlayerRightSprite.name)
-                                heldItem.GetComponent<Animator>().SetTrigger("HammerRight");
+                            heldItem.GetComponent<Animator>().SetTrigger("HammerRight");
                         else if (GetComponent<SpriteRenderer>().sprite.name == PlayerLeftSprite.name)
                             heldItem.GetComponent<Animator>().SetTrigger("HammerLeft");
                         else if (GetComponent<SpriteRenderer>().sprite.name == PlayerUpSprite.name)
                             heldItem.GetComponent<Animator>().SetTrigger("HammerUp");
                         else if (GetComponent<SpriteRenderer>().sprite.name == PlayerDownSprite.name)
                             heldItem.GetComponent<Animator>().SetTrigger("HammerDown");
+
+                        GameObject glass = gameObject.SearchHierarchy(HierarchySearchType.All, true, "Glass").First();
+                        float distanceToGlass = Vector2.Distance(new Vector2(transform.position.x, transform.position.y), new Vector2(glass.transform.position.x, glass.transform.position.y));
+                        if (distanceToGlass <= 1.25f)
+                        {
+                            GetComponent<AudioSource>().PlayOneShot(GlassBreakAudioClip);
+                            Destroy(glass);
+                            Destroy(heldItem);
+                            _currentRoom.SearchHierarchy(HierarchySearchType.Children, true, "Magnet").First().SetActive(true);
+                        }
                     }
                 }
 
