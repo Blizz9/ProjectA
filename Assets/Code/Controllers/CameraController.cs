@@ -20,7 +20,6 @@ public class CameraController : MonoBehaviour
     public void Awake()
     {
         Camera.main.transform.localPosition = new Vector3(ZoomLevel1.x, ZoomLevel1.y, Camera.main.transform.localPosition.z);
-
         Camera.main.orthographicSize = ZoomLevel1.z;
     }
 

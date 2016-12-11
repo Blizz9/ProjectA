@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 
     public Sprite FloorTileSprite;
     public Sprite DoorTileSprite;
+    public Sprite WallTileKeyHoleSprite;
 
     private GameObject _currentRoom;
 
@@ -29,17 +30,106 @@ public class PlayerController : MonoBehaviour
 
     public void Update()
     {
+        GameObject magnetizedItem = null;
+
+        if (Input.GetButton("Jump"))
+        {
+            if (transform.childCount > 0)
+            {
+                GameObject heldItem = transform.GetChild(0).gameObject;
+
+                if (Input.GetButtonDown("Jump"))
+                {
+                    Debug.Log("Using " + heldItem.name);
+
+                    if (heldItem.name == "Sonar")
+                    {
+                        heldItem.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Ping");
+                        heldItem.GetComponent<AudioSource>().Play();
+
+                        RaycastHit2D[] nearColliders = Physics2D.CircleCastAll(transform.position, 1.3f, Vector2.zero);
+                        foreach (RaycastHit2D nearCollider in nearColliders)
+                        {
+                            if (nearCollider.collider.name == "WallTile")
+                            {
+                                nearCollider.collider.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.25f);
+                            }
+                            else if (nearCollider.collider.name == "HiddenDoorTile")
+                            {
+                                GameObject doorTile = nearCollider.collider.gameObject;
+
+                                doorTile.name = "DoorTile";
+                                doorTile.GetComponent<SpriteRenderer>().sprite = DoorTileSprite;
+
+                                if (_currentRoom.name == "Room2")
+                                {
+                                    gameObject.SearchHierarchy(HierarchySearchType.All, true, "ItemInstructions").First().SetActive(false);
+                                    Destroy(heldItem);
+                                }
+                                else if (_currentRoom.name == "Room3")
+                                {
+                                    if (_currentRoom.SearchHierarchy(HierarchySearchType.Descendants, true, "HiddenKeyHole").FirstOrDefault() == null)
+                                        Destroy(heldItem);
+                                }
+
+                                Debug.Log("Found hidden door");
+                            }
+                            else if (nearCollider.collider.name == "HiddenKeyHole")
+                            {
+                                GameObject wallTile = nearCollider.collider.gameObject;
+
+                                wallTile.name = "KeyHole";
+                                wallTile.GetComponent<BoxCollider2D>().size = new Vector2(0.2f, 1f);
+                                wallTile.GetComponent<BoxCollider2D>().offset = new Vector2(0.1f, 0.5f);
+                                BoxCollider2D secondCollider = wallTile.AddComponent<BoxCollider2D>();
+                                secondCollider.size = new Vector2(0.2f, 1f);
+                                secondCollider.offset = new Vector2(0.9f, 0.5f);
+                                wallTile.GetComponent<SpriteRenderer>().sprite = WallTileKeyHoleSprite;
+
+                                if (_currentRoom.SearchHierarchy(HierarchySearchType.Descendants, true, "HiddenDoorTile").FirstOrDefault() == null)
+                                    Destroy(heldItem);
+
+                                Debug.Log("Found hidden key hole");
+                            }
+                        }
+                    }
+                }
+
+                if (heldItem.name == "Magnet")
+                {
+                    GameObject roomKey = _currentRoom.SearchHierarchy(HierarchySearchType.Children, true, "Key").First();
+
+                    float distance = Vector2.Distance(new Vector2(roomKey.transform.position.x, roomKey.transform.position.y), new Vector2(heldItem.transform.position.x, heldItem.transform.position.y));
+
+                    if (distance <= 7f)
+                        magnetizedItem = roomKey;
+                }
+            }
+        }
+
         if (Input.GetAxis("Horizontal") < 0f)
         {
             float x = transform.localPosition.x - MOVE_RATE * Time.deltaTime;
             transform.localPosition = new Vector3(x, transform.localPosition.y, transform.localPosition.z);
             GetComponent<SpriteRenderer>().sprite = PlayerLeftSprite;
+
+            if (magnetizedItem != null)
+            {
+                float mix = magnetizedItem.transform.localPosition.x - MOVE_RATE * Time.deltaTime;
+                magnetizedItem.transform.localPosition = new Vector3(mix, magnetizedItem.transform.localPosition.y, magnetizedItem.transform.localPosition.z);
+            }
         }
         else if (Input.GetAxis("Horizontal") > 0f)
         {
             float x = transform.localPosition.x + MOVE_RATE * Time.deltaTime;
             transform.localPosition = new Vector3(x, transform.localPosition.y, transform.localPosition.z);
             GetComponent<SpriteRenderer>().sprite = PlayerRightSprite;
+
+            if (magnetizedItem != null)
+            {
+                float mix = magnetizedItem.transform.localPosition.x + MOVE_RATE * Time.deltaTime;
+                magnetizedItem.transform.localPosition = new Vector3(mix, magnetizedItem.transform.localPosition.y, magnetizedItem.transform.localPosition.z);
+            }
         }
 
         if (Input.GetAxis("Vertical") < 0f)
@@ -47,48 +137,33 @@ public class PlayerController : MonoBehaviour
             float y = transform.localPosition.y - MOVE_RATE * Time.deltaTime;
             transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
             GetComponent<SpriteRenderer>().sprite = PlayerDownSprite;
+
+            if (magnetizedItem != null)
+            {
+                float miy = magnetizedItem.transform.localPosition.y - MOVE_RATE * Time.deltaTime;
+                magnetizedItem.transform.localPosition = new Vector3(magnetizedItem.transform.localPosition.x, miy, magnetizedItem.transform.localPosition.z);
+            }
         }
         else if (Input.GetAxis("Vertical") > 0f)
         {
             float y = transform.localPosition.y + MOVE_RATE * Time.deltaTime;
             transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
             GetComponent<SpriteRenderer>().sprite = PlayerUpSprite;
-        }
 
-        if (Input.GetButtonDown("Jump"))
-        {
-            if (transform.childCount > 0)
+            if (magnetizedItem != null)
             {
-                GameObject heldItem = transform.GetChild(0).gameObject;
+                float miy = magnetizedItem.transform.localPosition.y + MOVE_RATE * Time.deltaTime;
+                magnetizedItem.transform.localPosition = new Vector3(magnetizedItem.transform.localPosition.x, miy, magnetizedItem.transform.localPosition.z);
 
-                Debug.Log("Using " + heldItem.name);
-
-                if (heldItem.name == "Sonar")
+                if (magnetizedItem.name == "Key")
                 {
-                    heldItem.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Ping");
-                    heldItem.GetComponent<AudioSource>().Play();
-
-                    RaycastHit2D[] nearColliders = Physics2D.CircleCastAll(transform.position, 1.3f, Vector2.zero);
-                    foreach (RaycastHit2D nearCollider in nearColliders)
+                    if (miy >= 1.5f)
                     {
-                        if (nearCollider.collider.name == "WallTile")
-                        {
-                            nearCollider.collider.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.25f);
-                        }
-                        else if (nearCollider.collider.name == "HiddenDoorTile")
-                        {
-                            GameObject doorTile = nearCollider.collider.gameObject;
+                        GameObject magnet = transform.GetChild(0).gameObject;
+                        Destroy(magnet);
 
-                            doorTile.name = "DoorTile";
-                            doorTile.GetComponent<SpriteRenderer>().sprite = DoorTileSprite;
-
-                            if (_currentRoom.name == "Room2")
-                                gameObject.SearchHierarchy(HierarchySearchType.All, true, "ItemInstructions").First().SetActive(false);
-
-                            Destroy(heldItem);
-
-                            Debug.Log("Found hidden door");
-                        }
+                        Destroy(magnetizedItem.GetComponent<Rigidbody2D>());
+                        magnetizedItem.GetComponent<Collider2D>().isTrigger = true;
                     }
                 }
             }
@@ -169,6 +244,19 @@ public class PlayerController : MonoBehaviour
                 sonar.GetComponent<Collider2D>().enabled = false;
 
                 Debug.Log("Picked up sonar");
+            }
+            else if (collision.gameObject.name == "Magnet")
+            {
+                dropHeldItem();
+
+                GameObject magnet = collision.gameObject;
+
+                magnet.transform.parent = gameObject.transform;
+                magnet.transform.localPosition = new Vector3(-0.333f, -0.667f, 0f);
+                magnet.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                magnet.GetComponent<Collider2D>().enabled = false;
+
+                Debug.Log("Picked up magnet");
             }
         }
     }
