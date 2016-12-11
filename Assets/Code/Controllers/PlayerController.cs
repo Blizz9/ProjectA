@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
                                 GetComponent<AudioSource>().PlayOneShot(GlassBreakAudioClip);
                                 Destroy(glass);
                                 Destroy(heldItem);
-                                _currentRoom.SearchHierarchy(HierarchySearchType.Children, true, "Magnet").First().SetActive(true);
+                                _currentRoom.SearchHierarchy(HierarchySearchType.Children, true, "Key").First().SetActive(true);
                             }
                         }
                     }
@@ -201,7 +201,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            if (transform.position.y < -5.5f)
+            if (transform.position.y > 13.5f)
             {
                 _end = true;
                 GetComponent<Animator>().SetTrigger("End");
@@ -267,6 +267,10 @@ public class PlayerController : MonoBehaviour
                         _currentRoom = gameObject.SearchHierarchy(HierarchySearchType.Siblings, true, "Room4").First();
                         Camera.main.GetComponent<CameraController>().ZoomLevelTarget = 4;
                         break;
+
+					case "Room4":
+						Camera.main.GetComponent<CameraController>().ZoomLevelTarget = 5;
+						break;
                 }
 
                 doorTile.GetComponents<AudioSource>().ToList().ForEach(aus => aus.Play());

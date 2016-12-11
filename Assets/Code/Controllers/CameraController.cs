@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     public Vector3 ZoomLevel2;
     public Vector3 ZoomLevel3;
     public Vector3 ZoomLevel4;
+	public Vector3 ZoomLevel5;
 
     [HideInInspector] public int ZoomLevelTarget;
 
@@ -50,6 +51,10 @@ public class CameraController : MonoBehaviour
                 case 4:
                     zoomValues = ZoomLevel4;
                     break;
+
+				case 5:
+					zoomValues = ZoomLevel5;
+					break;
             }
 
             float xZoomRate = ZoomRate * 1.777778f;
