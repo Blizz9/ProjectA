@@ -31202,6 +31202,7 @@ GameObject:
   - component: {fileID: 1427857493}
   - component: {fileID: 1427857492}
   - component: {fileID: 1427857494}
+  - component: {fileID: 1427857495}
   - component: {fileID: 1427857491}
   m_Layer: 0
   m_Name: Player
@@ -31276,6 +31277,9 @@ MonoBehaviour:
   PlayerRightSprite: {fileID: 21300000, guid: c377a630c259c47adb40b4d15f104ae3, type: 3}
   FloorTileSprite: {fileID: 21300000, guid: 4c0c1abd4a59f4c52b4ed2888511a472, type: 3}
   DoorTileSprite: {fileID: 21300000, guid: 985636dd16100624f808cfff3b5820f9, type: 3}
+  DoorTileLeftSprite: {fileID: 21300000, guid: 8be295dfb21ad0645a1f06b3620c1edc, type: 3}
+  DoorTileBottomSprite: {fileID: 21300000, guid: fdec7aafd6cf4a2489279d14cbe43bdb,
+    type: 3}
   WallTileKeyHoleSprite: {fileID: 21300000, guid: 234cb121a42ffb748bf406e7bbef7b9b,
     type: 3}
   SonarAudioClip: {fileID: 8300000, guid: 57e3ff81e333c684b8b7208f1eca16b2, type: 3}
@@ -31394,6 +31398,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!95 &1427857495
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1427857488}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ab31ca5310206554dab0272f03443c17, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1433861422
 GameObject:
   m_ObjectHideFlags: 0

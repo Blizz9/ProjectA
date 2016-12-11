@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
 
     public Sprite FloorTileSprite;
     public Sprite DoorTileSprite;
+    public Sprite DoorTileLeftSprite;
+    public Sprite DoorTileBottomSprite;
     public Sprite WallTileKeyHoleSprite;
 
     public AudioClip SonarAudioClip;
@@ -20,6 +22,7 @@ public class PlayerController : MonoBehaviour
 
     private GameObject _currentRoom;
 
+    private bool _end;
     private bool _ignoreNextTriggerEnter;
 
     #region MonoBehaviour
@@ -35,161 +38,171 @@ public class PlayerController : MonoBehaviour
     {
         GameObject magnetizedItem = null;
 
-        if (Input.GetButton("Jump"))
+        if (!_end)
         {
-            if (transform.childCount > 0)
+            if (Input.GetButton("Jump"))
             {
-                GameObject heldItem = transform.GetChild(0).gameObject;
-
-                if (Input.GetButtonDown("Jump"))
+                if (transform.childCount > 0)
                 {
-                    Debug.Log("Using " + heldItem.name);
+                    GameObject heldItem = transform.GetChild(0).gameObject;
 
-                    if (heldItem.name == "Sonar")
+                    if (Input.GetButtonDown("Jump"))
                     {
-                        heldItem.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Ping");
-                        GetComponent<AudioSource>().PlayOneShot(SonarAudioClip);
+                        Debug.Log("Using " + heldItem.name);
 
-                        RaycastHit2D[] nearColliders = Physics2D.CircleCastAll(transform.position, 1.3f, Vector2.zero);
-                        foreach (RaycastHit2D nearCollider in nearColliders)
+                        if (heldItem.name == "Sonar")
                         {
-                            if (nearCollider.collider.name == "WallTile")
-                            {
-                                nearCollider.collider.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.25f);
-                            }
-                            else if (nearCollider.collider.name == "HiddenDoorTile")
-                            {
-                                GameObject doorTile = nearCollider.collider.gameObject;
+                            heldItem.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Ping");
+                            GetComponent<AudioSource>().PlayOneShot(SonarAudioClip);
 
-                                doorTile.name = "DoorTile";
-                                doorTile.GetComponent<SpriteRenderer>().sprite = DoorTileSprite;
-
-                                if (_currentRoom.name == "Room2")
+                            RaycastHit2D[] nearColliders = Physics2D.CircleCastAll(transform.position, 1.3f, Vector2.zero);
+                            foreach (RaycastHit2D nearCollider in nearColliders)
+                            {
+                                if (nearCollider.collider.name == "WallTile")
                                 {
-                                    gameObject.SearchHierarchy(HierarchySearchType.All, true, "ItemInstructions").First().SetActive(false);
-                                    Destroy(heldItem);
+                                    nearCollider.collider.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.25f);
                                 }
-                                else if (_currentRoom.name == "Room3")
+                                else if (nearCollider.collider.name == "HiddenDoorTile")
                                 {
-                                    if (_currentRoom.SearchHierarchy(HierarchySearchType.Descendants, true, "HiddenKeyHole").FirstOrDefault() == null)
+                                    GameObject doorTile = nearCollider.collider.gameObject;
+
+                                    doorTile.name = "DoorTile";
+                                    
+                                    if (_currentRoom.name == "Room2")
+                                    {
+                                        doorTile.GetComponent<SpriteRenderer>().sprite = DoorTileLeftSprite;
+                                        gameObject.SearchHierarchy(HierarchySearchType.All, true, "ItemInstructions").First().SetActive(false);
                                         Destroy(heldItem);
+                                    }
+                                    else if (_currentRoom.name == "Room3")
+                                    {
+                                        doorTile.GetComponent<SpriteRenderer>().sprite = DoorTileBottomSprite;
+                                        if (_currentRoom.SearchHierarchy(HierarchySearchType.Descendants, true, "HiddenKeyHole").FirstOrDefault() == null)
+                                            Destroy(heldItem);
+                                    }
+
+                                    Debug.Log("Found hidden door");
                                 }
+                                else if (nearCollider.collider.name == "HiddenKeyHole")
+                                {
+                                    GameObject wallTile = nearCollider.collider.gameObject;
 
-                                Debug.Log("Found hidden door");
-                            }
-                            else if (nearCollider.collider.name == "HiddenKeyHole")
-                            {
-                                GameObject wallTile = nearCollider.collider.gameObject;
+                                    wallTile.name = "KeyHole";
+                                    wallTile.GetComponent<BoxCollider2D>().size = new Vector2(0.2f, 1f);
+                                    wallTile.GetComponent<BoxCollider2D>().offset = new Vector2(0.1f, 0.5f);
+                                    BoxCollider2D secondCollider = wallTile.AddComponent<BoxCollider2D>();
+                                    secondCollider.size = new Vector2(0.2f, 1f);
+                                    secondCollider.offset = new Vector2(0.9f, 0.5f);
+                                    wallTile.GetComponent<SpriteRenderer>().sprite = WallTileKeyHoleSprite;
 
-                                wallTile.name = "KeyHole";
-                                wallTile.GetComponent<BoxCollider2D>().size = new Vector2(0.2f, 1f);
-                                wallTile.GetComponent<BoxCollider2D>().offset = new Vector2(0.1f, 0.5f);
-                                BoxCollider2D secondCollider = wallTile.AddComponent<BoxCollider2D>();
-                                secondCollider.size = new Vector2(0.2f, 1f);
-                                secondCollider.offset = new Vector2(0.9f, 0.5f);
-                                wallTile.GetComponent<SpriteRenderer>().sprite = WallTileKeyHoleSprite;
+                                    if (_currentRoom.SearchHierarchy(HierarchySearchType.Descendants, true, "HiddenDoorTile").FirstOrDefault() == null)
+                                        Destroy(heldItem);
 
-                                if (_currentRoom.SearchHierarchy(HierarchySearchType.Descendants, true, "HiddenDoorTile").FirstOrDefault() == null)
-                                    Destroy(heldItem);
-
-                                Debug.Log("Found hidden key hole");
+                                    Debug.Log("Found hidden key hole");
+                                }
                             }
                         }
-                    }
-                    else if (heldItem.name == "Hammer")
-                    {
-                        if (GetComponent<SpriteRenderer>().sprite.name == PlayerRightSprite.name)
-                            heldItem.GetComponent<Animator>().SetTrigger("HammerRight");
-                        else if (GetComponent<SpriteRenderer>().sprite.name == PlayerLeftSprite.name)
-                            heldItem.GetComponent<Animator>().SetTrigger("HammerLeft");
-                        else if (GetComponent<SpriteRenderer>().sprite.name == PlayerUpSprite.name)
-                            heldItem.GetComponent<Animator>().SetTrigger("HammerUp");
-                        else if (GetComponent<SpriteRenderer>().sprite.name == PlayerDownSprite.name)
-                            heldItem.GetComponent<Animator>().SetTrigger("HammerDown");
-
-                        GameObject glass = gameObject.SearchHierarchy(HierarchySearchType.All, true, "Glass").First();
-                        float distanceToGlass = Vector2.Distance(new Vector2(transform.position.x, transform.position.y), new Vector2(glass.transform.position.x, glass.transform.position.y));
-                        if (distanceToGlass <= 1.25f)
+                        else if (heldItem.name == "Hammer")
                         {
-                            GetComponent<AudioSource>().PlayOneShot(GlassBreakAudioClip);
-                            Destroy(glass);
-                            Destroy(heldItem);
-                            _currentRoom.SearchHierarchy(HierarchySearchType.Children, true, "Magnet").First().SetActive(true);
+                            if (GetComponent<SpriteRenderer>().sprite.name == PlayerRightSprite.name)
+                                heldItem.GetComponent<Animator>().SetTrigger("HammerRight");
+                            else if (GetComponent<SpriteRenderer>().sprite.name == PlayerLeftSprite.name)
+                                heldItem.GetComponent<Animator>().SetTrigger("HammerLeft");
+                            else if (GetComponent<SpriteRenderer>().sprite.name == PlayerUpSprite.name)
+                                heldItem.GetComponent<Animator>().SetTrigger("HammerUp");
+                            else if (GetComponent<SpriteRenderer>().sprite.name == PlayerDownSprite.name)
+                                heldItem.GetComponent<Animator>().SetTrigger("HammerDown");
+
+                            GameObject glass = gameObject.SearchHierarchy(HierarchySearchType.All, true, "Glass").First();
+                            float distanceToGlass = Vector2.Distance(new Vector2(transform.position.x, transform.position.y), new Vector2(glass.transform.position.x, glass.transform.position.y));
+                            if (distanceToGlass <= 1.25f)
+                            {
+                                GetComponent<AudioSource>().PlayOneShot(GlassBreakAudioClip);
+                                Destroy(glass);
+                                Destroy(heldItem);
+                                _currentRoom.SearchHierarchy(HierarchySearchType.Children, true, "Magnet").First().SetActive(true);
+                            }
+                        }
+                    }
+
+                    if (heldItem.name == "Magnet")
+                    {
+                        GameObject roomKey = _currentRoom.SearchHierarchy(HierarchySearchType.Children, true, "Key").First();
+
+                        float distance = Vector2.Distance(new Vector2(roomKey.transform.position.x, roomKey.transform.position.y), new Vector2(heldItem.transform.position.x, heldItem.transform.position.y));
+
+                        if (distance <= 7f)
+                            magnetizedItem = roomKey;
+                    }
+                }
+            }
+
+            if (Input.GetAxis("Horizontal") < 0f)
+            {
+                float x = transform.localPosition.x - MoveRate * Time.deltaTime;
+                transform.localPosition = new Vector3(x, transform.localPosition.y, transform.localPosition.z);
+                GetComponent<SpriteRenderer>().sprite = PlayerLeftSprite;
+
+                if (magnetizedItem != null)
+                {
+                    float mix = magnetizedItem.transform.localPosition.x - MoveRate * Time.deltaTime;
+                    magnetizedItem.transform.localPosition = new Vector3(mix, magnetizedItem.transform.localPosition.y, magnetizedItem.transform.localPosition.z);
+                }
+            }
+            else if (Input.GetAxis("Horizontal") > 0f)
+            {
+                float x = transform.localPosition.x + MoveRate * Time.deltaTime;
+                transform.localPosition = new Vector3(x, transform.localPosition.y, transform.localPosition.z);
+                GetComponent<SpriteRenderer>().sprite = PlayerRightSprite;
+
+                if (magnetizedItem != null)
+                {
+                    float mix = magnetizedItem.transform.localPosition.x + MoveRate * Time.deltaTime;
+                    magnetizedItem.transform.localPosition = new Vector3(mix, magnetizedItem.transform.localPosition.y, magnetizedItem.transform.localPosition.z);
+                }
+            }
+
+            if (Input.GetAxis("Vertical") < 0f)
+            {
+                float y = transform.localPosition.y - MoveRate * Time.deltaTime;
+                transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
+                GetComponent<SpriteRenderer>().sprite = PlayerDownSprite;
+
+                if (magnetizedItem != null)
+                {
+                    float miy = magnetizedItem.transform.localPosition.y - MoveRate * Time.deltaTime;
+                    magnetizedItem.transform.localPosition = new Vector3(magnetizedItem.transform.localPosition.x, miy, magnetizedItem.transform.localPosition.z);
+                }
+            }
+            else if (Input.GetAxis("Vertical") > 0f)
+            {
+                float y = transform.localPosition.y + MoveRate * Time.deltaTime;
+                transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
+                GetComponent<SpriteRenderer>().sprite = PlayerUpSprite;
+
+                if (magnetizedItem != null)
+                {
+                    float miy = magnetizedItem.transform.localPosition.y + MoveRate * Time.deltaTime;
+                    magnetizedItem.transform.localPosition = new Vector3(magnetizedItem.transform.localPosition.x, miy, magnetizedItem.transform.localPosition.z);
+
+                    if (magnetizedItem.name == "Key")
+                    {
+                        if (miy >= 1.5f)
+                        {
+                            GameObject magnet = transform.GetChild(0).gameObject;
+                            Destroy(magnet);
+
+                            Destroy(magnetizedItem.GetComponent<Rigidbody2D>());
+                            magnetizedItem.GetComponent<Collider2D>().isTrigger = true;
                         }
                     }
                 }
-
-                if (heldItem.name == "Magnet")
-                {
-                    GameObject roomKey = _currentRoom.SearchHierarchy(HierarchySearchType.Children, true, "Key").First();
-
-                    float distance = Vector2.Distance(new Vector2(roomKey.transform.position.x, roomKey.transform.position.y), new Vector2(heldItem.transform.position.x, heldItem.transform.position.y));
-
-                    if (distance <= 7f)
-                        magnetizedItem = roomKey;
-                }
             }
-        }
 
-        if (Input.GetAxis("Horizontal") < 0f)
-        {
-            float x = transform.localPosition.x - MoveRate * Time.deltaTime;
-            transform.localPosition = new Vector3(x, transform.localPosition.y, transform.localPosition.z);
-            GetComponent<SpriteRenderer>().sprite = PlayerLeftSprite;
-
-            if (magnetizedItem != null)
+            if (transform.position.y < -5.5f)
             {
-                float mix = magnetizedItem.transform.localPosition.x - MoveRate * Time.deltaTime;
-                magnetizedItem.transform.localPosition = new Vector3(mix, magnetizedItem.transform.localPosition.y, magnetizedItem.transform.localPosition.z);
-            }
-        }
-        else if (Input.GetAxis("Horizontal") > 0f)
-        {
-            float x = transform.localPosition.x + MoveRate * Time.deltaTime;
-            transform.localPosition = new Vector3(x, transform.localPosition.y, transform.localPosition.z);
-            GetComponent<SpriteRenderer>().sprite = PlayerRightSprite;
-
-            if (magnetizedItem != null)
-            {
-                float mix = magnetizedItem.transform.localPosition.x + MoveRate * Time.deltaTime;
-                magnetizedItem.transform.localPosition = new Vector3(mix, magnetizedItem.transform.localPosition.y, magnetizedItem.transform.localPosition.z);
-            }
-        }
-
-        if (Input.GetAxis("Vertical") < 0f)
-        {
-            float y = transform.localPosition.y - MoveRate * Time.deltaTime;
-            transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
-            GetComponent<SpriteRenderer>().sprite = PlayerDownSprite;
-
-            if (magnetizedItem != null)
-            {
-                float miy = magnetizedItem.transform.localPosition.y - MoveRate * Time.deltaTime;
-                magnetizedItem.transform.localPosition = new Vector3(magnetizedItem.transform.localPosition.x, miy, magnetizedItem.transform.localPosition.z);
-            }
-        }
-        else if (Input.GetAxis("Vertical") > 0f)
-        {
-            float y = transform.localPosition.y + MoveRate * Time.deltaTime;
-            transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
-            GetComponent<SpriteRenderer>().sprite = PlayerUpSprite;
-
-            if (magnetizedItem != null)
-            {
-                float miy = magnetizedItem.transform.localPosition.y + MoveRate * Time.deltaTime;
-                magnetizedItem.transform.localPosition = new Vector3(magnetizedItem.transform.localPosition.x, miy, magnetizedItem.transform.localPosition.z);
-
-                if (magnetizedItem.name == "Key")
-                {
-                    if (miy >= 1.5f)
-                    {
-                        GameObject magnet = transform.GetChild(0).gameObject;
-                        Destroy(magnet);
-
-                        Destroy(magnetizedItem.GetComponent<Rigidbody2D>());
-                        magnetizedItem.GetComponent<Collider2D>().isTrigger = true;
-                    }
-                }
+                _end = true;
+                GetComponent<Animator>().SetTrigger("End");
             }
         }
     }
