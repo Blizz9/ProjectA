@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
 
     public AudioClip SonarAudioClip;
     public AudioClip GlassBreakAudioClip;
-    public AudioClip MagnetAudioClip;
+	public AudioClip DeathAudioClip;
 
     private GameObject _currentRoom;
 
@@ -124,12 +124,15 @@ public class PlayerController : MonoBehaviour
                                 _currentRoom.SearchHierarchy(HierarchySearchType.Children, true, "Key").First().SetActive(true);
                             }
                         }
+						else if (heldItem.name == "Magnet")
+						{
+							heldItem.GetComponent<AudioSource>().Play();
+						}
                     }
 
                     if (heldItem.name == "Magnet")
                     {
                         GameObject roomKey = _currentRoom.SearchHierarchy(HierarchySearchType.Children, true, "Key").First();
-                        GetComponent<AudioSource>().PlayOneShot(MagnetAudioClip);
 
                         float distance = Vector2.Distance(new Vector2(roomKey.transform.position.x, roomKey.transform.position.y), new Vector2(heldItem.transform.position.x, heldItem.transform.position.y));
 
@@ -138,6 +141,13 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
+
+			if (Input.GetButtonUp("Jump"))
+			{
+				GameObject magnet = gameObject.SearchHierarchy(HierarchySearchType.All, true, "Magnet").FirstOrDefault();
+				if (magnet != null)
+					magnet.GetComponent<AudioSource>().Stop();
+			}
 
             if (Input.GetAxis("Horizontal") < 0f)
             {
@@ -205,6 +215,7 @@ public class PlayerController : MonoBehaviour
             {
                 _end = true;
                 GetComponent<Animator>().SetTrigger("End");
+				GetComponent<AudioSource>().PlayOneShot(DeathAudioClip);
             }
         }
     }
