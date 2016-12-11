@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
     public AudioClip SonarAudioClip;
     public AudioClip GlassBreakAudioClip;
+    public AudioClip MagnetAudioClip;
 
     private GameObject _currentRoom;
 
@@ -128,6 +129,7 @@ public class PlayerController : MonoBehaviour
                     if (heldItem.name == "Magnet")
                     {
                         GameObject roomKey = _currentRoom.SearchHierarchy(HierarchySearchType.Children, true, "Key").First();
+                        GetComponent<AudioSource>().PlayOneShot(MagnetAudioClip);
 
                         float distance = Vector2.Distance(new Vector2(roomKey.transform.position.x, roomKey.transform.position.y), new Vector2(heldItem.transform.position.x, heldItem.transform.position.y));
 
