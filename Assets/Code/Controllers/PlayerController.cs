@@ -93,6 +93,17 @@ public class PlayerController : MonoBehaviour
                             }
                         }
                     }
+                    else if (heldItem.name == "Hammer")
+                    {
+                        if (GetComponent<SpriteRenderer>().sprite.name == PlayerRightSprite.name)
+                                heldItem.GetComponent<Animator>().SetTrigger("HammerRight");
+                        else if (GetComponent<SpriteRenderer>().sprite.name == PlayerLeftSprite.name)
+                            heldItem.GetComponent<Animator>().SetTrigger("HammerLeft");
+                        else if (GetComponent<SpriteRenderer>().sprite.name == PlayerUpSprite.name)
+                            heldItem.GetComponent<Animator>().SetTrigger("HammerUp");
+                        else if (GetComponent<SpriteRenderer>().sprite.name == PlayerDownSprite.name)
+                            heldItem.GetComponent<Animator>().SetTrigger("HammerDown");
+                    }
                 }
 
                 if (heldItem.name == "Magnet")
@@ -262,6 +273,18 @@ public class PlayerController : MonoBehaviour
                 magnet.GetComponent<Collider2D>().enabled = false;
 
                 Debug.Log("Picked up magnet");
+            }
+            else if (collision.gameObject.name == "Hammer")
+            {
+                dropHeldItem();
+
+                GameObject hammer = collision.gameObject;
+
+                hammer.transform.parent = gameObject.transform;
+                hammer.transform.localPosition = new Vector3(-0.5f, 0.3f, 0f);
+                hammer.GetComponent<Collider2D>().enabled = false;
+
+                Debug.Log("Picked up hammer");
             }
         }
     }
