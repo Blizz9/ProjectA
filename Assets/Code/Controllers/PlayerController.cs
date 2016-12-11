@@ -4,7 +4,7 @@ using UnityEngine;
 [AddComponentMenu("Ludum Dare 37/Controllers/Player Controller")]
 public class PlayerController : MonoBehaviour
 {
-    private const float MOVE_RATE = 3f;
+    public float MoveRate = 3f;
 
     public Sprite PlayerUpSprite;
     public Sprite PlayerDownSprite;
@@ -109,50 +109,50 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetAxis("Horizontal") < 0f)
         {
-            float x = transform.localPosition.x - MOVE_RATE * Time.deltaTime;
+            float x = transform.localPosition.x - MoveRate * Time.deltaTime;
             transform.localPosition = new Vector3(x, transform.localPosition.y, transform.localPosition.z);
             GetComponent<SpriteRenderer>().sprite = PlayerLeftSprite;
 
             if (magnetizedItem != null)
             {
-                float mix = magnetizedItem.transform.localPosition.x - MOVE_RATE * Time.deltaTime;
+                float mix = magnetizedItem.transform.localPosition.x - MoveRate * Time.deltaTime;
                 magnetizedItem.transform.localPosition = new Vector3(mix, magnetizedItem.transform.localPosition.y, magnetizedItem.transform.localPosition.z);
             }
         }
         else if (Input.GetAxis("Horizontal") > 0f)
         {
-            float x = transform.localPosition.x + MOVE_RATE * Time.deltaTime;
+            float x = transform.localPosition.x + MoveRate * Time.deltaTime;
             transform.localPosition = new Vector3(x, transform.localPosition.y, transform.localPosition.z);
             GetComponent<SpriteRenderer>().sprite = PlayerRightSprite;
 
             if (magnetizedItem != null)
             {
-                float mix = magnetizedItem.transform.localPosition.x + MOVE_RATE * Time.deltaTime;
+                float mix = magnetizedItem.transform.localPosition.x + MoveRate * Time.deltaTime;
                 magnetizedItem.transform.localPosition = new Vector3(mix, magnetizedItem.transform.localPosition.y, magnetizedItem.transform.localPosition.z);
             }
         }
 
         if (Input.GetAxis("Vertical") < 0f)
         {
-            float y = transform.localPosition.y - MOVE_RATE * Time.deltaTime;
+            float y = transform.localPosition.y - MoveRate * Time.deltaTime;
             transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
             GetComponent<SpriteRenderer>().sprite = PlayerDownSprite;
 
             if (magnetizedItem != null)
             {
-                float miy = magnetizedItem.transform.localPosition.y - MOVE_RATE * Time.deltaTime;
+                float miy = magnetizedItem.transform.localPosition.y - MoveRate * Time.deltaTime;
                 magnetizedItem.transform.localPosition = new Vector3(magnetizedItem.transform.localPosition.x, miy, magnetizedItem.transform.localPosition.z);
             }
         }
         else if (Input.GetAxis("Vertical") > 0f)
         {
-            float y = transform.localPosition.y + MOVE_RATE * Time.deltaTime;
+            float y = transform.localPosition.y + MoveRate * Time.deltaTime;
             transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
             GetComponent<SpriteRenderer>().sprite = PlayerUpSprite;
 
             if (magnetizedItem != null)
             {
-                float miy = magnetizedItem.transform.localPosition.y + MOVE_RATE * Time.deltaTime;
+                float miy = magnetizedItem.transform.localPosition.y + MoveRate * Time.deltaTime;
                 magnetizedItem.transform.localPosition = new Vector3(magnetizedItem.transform.localPosition.x, miy, magnetizedItem.transform.localPosition.z);
 
                 if (magnetizedItem.name == "Key")
@@ -222,6 +222,11 @@ public class PlayerController : MonoBehaviour
                     case "Room2":
                         _currentRoom = gameObject.SearchHierarchy(HierarchySearchType.Siblings, true, "Room3").First();
                         Camera.main.GetComponent<CameraController>().ZoomLevelTarget = 3;
+                        break;
+
+                    case "Room3":
+                        _currentRoom = gameObject.SearchHierarchy(HierarchySearchType.Siblings, true, "Room4").First();
+                        Camera.main.GetComponent<CameraController>().ZoomLevelTarget = 4;
                         break;
                 }
 

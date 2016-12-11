@@ -3,15 +3,16 @@
 [AddComponentMenu("Ludum Dare 37/Controllers/Camera Controller")]
 public class CameraController : MonoBehaviour
 {
-    private const float X_ZOOM_RATE = 1.777778f;
-    private const float Y_ZOOM_RATE = 1f;
-    private const float SIZE_ZOOM_RATE = 1f;
+    //private const float X_ZOOM_RATE = 1.777778f;
+    //private const float Y_ZOOM_RATE = 1f;
+    //private const float SIZE_ZOOM_RATE = 1f;
+
+    public float ZoomRate = 1f;
 
     public Vector3 ZoomLevel1;
     public Vector3 ZoomLevel2;
     public Vector3 ZoomLevel3;
     public Vector3 ZoomLevel4;
-    public Vector3 ZoomLevel7;
 
     [HideInInspector] public int ZoomLevelTarget;
 
@@ -55,22 +56,24 @@ public class CameraController : MonoBehaviour
                     break;
             }
 
-			float x = Camera.main.transform.localPosition.x;
+            float xZoomRate = ZoomRate * 1.777778f;
+
+            float x = Camera.main.transform.localPosition.x;
 			float y = Camera.main.transform.localPosition.y;
 
 			if (x < zoomValues.x)
-				x = Mathf.Clamp(Camera.main.transform.localPosition.x + X_ZOOM_RATE * Time.deltaTime, x, zoomValues.x);
+				x = Mathf.Clamp(Camera.main.transform.localPosition.x + xZoomRate * Time.deltaTime, x, zoomValues.x);
 			else
-				x = Mathf.Clamp(Camera.main.transform.localPosition.x - X_ZOOM_RATE * Time.deltaTime, zoomValues.x, x);
+				x = Mathf.Clamp(Camera.main.transform.localPosition.x - xZoomRate * Time.deltaTime, zoomValues.x, x);
 
 			if (y < zoomValues.y)
-            	y = Mathf.Clamp(Camera.main.transform.localPosition.y + Y_ZOOM_RATE * Time.deltaTime, y, zoomValues.y);
+            	y = Mathf.Clamp(Camera.main.transform.localPosition.y + ZoomRate * Time.deltaTime, y, zoomValues.y);
 			else
-				y = Mathf.Clamp(Camera.main.transform.localPosition.y - Y_ZOOM_RATE * Time.deltaTime, zoomValues.y, y);
+				y = Mathf.Clamp(Camera.main.transform.localPosition.y - ZoomRate * Time.deltaTime, zoomValues.y, y);
 			
             Camera.main.transform.localPosition = new Vector3(x, y, Camera.main.transform.localPosition.z);
 
-            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize + SIZE_ZOOM_RATE * Time.deltaTime, Camera.main.orthographicSize, zoomValues.z);
+            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize + ZoomRate * Time.deltaTime, Camera.main.orthographicSize, zoomValues.z);
 
             if ((x == zoomValues.x) && (y == zoomValues.y) && (Camera.main.orthographicSize == zoomValues.z))
                 ZoomLevelTarget = 0;
