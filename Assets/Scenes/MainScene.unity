@@ -23978,7 +23978,7 @@ MonoBehaviour:
   ZoomLevel2: {x: 8, y: 4.5, z: 4.5}
   ZoomLevel3: {x: 3.5, y: 2, z: 7}
   ZoomLevel4: {x: 3.5, y: 2, z: 11}
-  ZoomLevel5: {x: 3.5, y: 2, z: 15}
+  ZoomLevel5: {x: 3.5, y: 2, z: 25}
   ZoomLevelTarget: 0
 --- !u!1 &733234729
 GameObject:
@@ -29594,7 +29594,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 4f7729d6c86e2c04bb17e28768d7424d, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.97794116, g: 0.33796492, b: 0.33796492, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1 &898173719
@@ -29812,7 +29812,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4ce4745d56eb79e4aa8a3cc0b4dcb32b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 81a0f353e803b477c8ce252af2a05c83, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -45691,7 +45691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09857bed460acf04aba4d68ec17aeeb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveRate: 6
+  MoveRate: 3
   PlayerUpSprite: {fileID: 21300000, guid: e23cd5fc6424c4f89b180db123d7802b, type: 3}
   PlayerDownSprite: {fileID: 21300000, guid: ac9defa7dd11aca4e8e51775f59745af, type: 3}
   PlayerLeftSprite: {fileID: 21300000, guid: 011f38118283d46b69186a345604e685, type: 3}
@@ -52299,7 +52299,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 4f7729d6c86e2c04bb17e28768d7424d, type: 3}
-  m_Color: {r: 0.397, g: 0.866, b: 0.866, a: 0.866}
+  m_Color: {r: 0.88235295, g: 0.3698097, b: 0.3698097, a: 0.866}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1 &1666037374
